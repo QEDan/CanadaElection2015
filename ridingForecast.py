@@ -28,6 +28,7 @@ class ridingForecast():
         self.forecastProb = forecastProb
         self.partyList = []
 
+
     def addParty(self, newPartyForecast):
         self.partyList.append(newPartyForecast)
 
@@ -35,10 +36,32 @@ class ridingForecast():
         maxForecast = 0
         winner = None
         for party in self.partyList:
-            if party.forecast > maxForecast:
+            if party.forecast >= maxForecast:
                 maxForecast = party.forecast
                 winner = party.partyName
-        return winner
+        return (winner, maxForecast)
+
+    def getSecond(self):
+        maxForecast = 0
+        secondForecast = 0
+        winner = None
+        second = None
+        for party in self.partyList:
+            if party.forecast >= maxForecast:
+                secondForecast = maxForecast
+                second = winner
+                maxForecast = party.forecast
+                winner = party.partyName
+        return (second, secondForecast)
+
+
+    def getForecast(self, partyName):
+        for party in self.partyList:
+            if partyName == party.partyName:
+                return party.forecast
+        print("Warning: {} Party not found".format(partyName))
+        return -1.0
+
 
     def __str__(self):
         output = [self.ridingName, 
@@ -50,7 +73,7 @@ class ridingForecast():
     
 def parseCleanForecasts(clean_contents):
     """
-    Function for parsing the election forcasts to a list 
+    Function for parsing the election forcasts to a dictionary 
     of ridingForecast objects assuming the following format:
     [['Low / Bas', '41.8', '22.0', '22.8', '0.0', '0.0', '6.9', '0.1', '\n'],
     ['Abbotsford', '44.0', '24.4', '23.7', '0.0', '0.0', '7.7', '0.1', '86%\n'],
@@ -60,7 +83,7 @@ def parseCleanForecasts(clean_contents):
     ['High / Haut', '25.1', '40.0', '37.0', '0.0', '0.0', '5.8', '0.2', '\n'],
     ...etc...
     """
-    ridingList = []
+    ridingDict = {}
     for row in clean_contents:
         if row[0] == 'Low / Bas':
             try:
@@ -83,28 +106,28 @@ def parseCleanForecasts(clean_contents):
             except ValueError:
                 print("Oops. Non-float detected...")
             
-            ridingList.append(ridingForecast(riding, forecast))
-            ridingList[-1].addParty(partyForecast(partyName='Conservative', 
+            ridingDict[riding] = ridingForecast(riding, forecast)
+            ridingDict[riding].addParty(partyForecast(partyName='Conservative', 
                                  forecast = conforecast, 
                                  high=conhigh, 
                                  low=conlow))
-            ridingList[-1].addParty(partyForecast(partyName='Liberal', 
+            ridingDict[riding].addParty(partyForecast(partyName='Liberal', 
                                  forecast = libforecast, 
                                  high=libhigh, 
                                  low=liblow))
-            ridingList[-1].addParty(partyForecast(partyName='New Democratic', 
+            ridingDict[riding].addParty(partyForecast(partyName='New Democratic', 
                                  forecast = ndpforecast, 
                                  high=ndphigh, 
                                  low=ndplow))
-            ridingList[-1].addParty(partyForecast(partyName='Bloc Quebecois', 
+            ridingDict[riding].addParty(partyForecast(partyName='Bloc Quebecois', 
                                  forecast = blocforecast, 
                                  high=blochigh, 
                                  low=bloclow))
-            ridingList[-1].addParty(partyForecast(partyName='Green', 
+            ridingDict[riding].addParty(partyForecast(partyName='Green', 
                                  forecast = greenforecast, 
                                  high=greenhigh, 
                                  low=greenlow))
-            ridingList[-1].addParty(partyForecast(partyName='Other', 
+            ridingDict[riding].addParty(partyForecast(partyName='Other', 
                                  forecast = otherforecast, 
                                  high=otherhigh, 
                                  low=otherlow))
@@ -125,4 +148,4 @@ def parseCleanForecasts(clean_contents):
             except ValueError:
                 print("Oops. Non-float detected...")
         
-    return ridingList
+    return ridingDict
