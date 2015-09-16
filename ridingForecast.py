@@ -1,4 +1,3 @@
-
 class partyForecast():
     """
     Class for holding the forecast for a specific party
