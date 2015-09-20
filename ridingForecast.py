@@ -1,5 +1,4 @@
-
-
+import matplotlib.pyplot as plt
 
 class partyForecast():
     """
@@ -55,6 +54,33 @@ class ridingForecast():
                 return party.forecast
         print("Warning: {} Party not found".format(partyName))
         return -1.0
+
+    def print308(self):
+         print("Low / Bas     {}     {}    {}    {}     {}     {}".format(
+             self.partyList[0].low,
+             self.partyList[1].low,
+             self.partyList[2].low,
+             self.partyList[3].low,
+             self.partyList[4].low,
+             self.partyList[5].low))
+         print("{}     {}     {}    {}    {}     {}     {}     {}%".format(
+             self.ridingName,
+             self.partyList[0].forecast,
+             self.partyList[1].forecast,
+             self.partyList[2].forecast,
+             self.partyList[3].forecast,
+             self.partyList[4].forecast,
+             self.partyList[5].forecast,
+             self.forecastProb*100))
+         print("High / Haut     {}     {}    {}    {}     {}     {}".format(
+             self.partyList[0].high,
+             self.partyList[1].high,
+             self.partyList[2].high,
+             self.partyList[3].high,
+             self.partyList[4].high,
+             self.partyList[5].high))
+         return
+        
 
 
     def __str__(self):
