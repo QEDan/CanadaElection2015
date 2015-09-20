@@ -1,3 +1,6 @@
+
+
+
 class partyForecast():
     """
     Class for holding the forecast for a specific party
@@ -41,17 +44,9 @@ class ridingForecast():
         return (winner, maxForecast)
 
     def getSecond(self):
-        maxForecast = 0
-        secondForecast = 0
-        winner = None
-        second = None
-        for party in self.partyList:
-            if party.forecast >= maxForecast:
-                secondForecast = maxForecast
-                second = winner
-                maxForecast = party.forecast
-                winner = party.partyName
-        return (second, secondForecast)
+        forecasts = sorted([(party.partyName, party.forecast) for party in self.partyList], 
+                           reverse=True, key=lambda x: x[1])
+        return forecasts[1]
 
 
     def getForecast(self, partyName):
