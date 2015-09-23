@@ -111,8 +111,8 @@ def parseCleanForecasts(clean_contents):
                 liblow = float(row[2])
                 ndplow = float(row[3])
                 bloclow = float(row[4])
-                greenlow = float(row[5])
-                otherlow = float(row[6])
+                greenlow = float(row[6])
+                otherlow = float(row[7])
             except ValueError:
                 print("Oops. Non-float detected...")
         elif row[0] == 'High / Haut':
@@ -121,8 +121,8 @@ def parseCleanForecasts(clean_contents):
                 libhigh = float(row[2])
                 ndphigh = float(row[3])
                 blochigh =float(row[4])
-                greenhigh = float(row[5])
-                otherhigh = float(row[6])
+                greenhigh = float(row[6])
+                otherhigh = float(row[7])
             except ValueError:
                 print("Oops. Non-float detected...")
             
@@ -162,8 +162,8 @@ def parseCleanForecasts(clean_contents):
                 libforecast = float(row[2])
                 ndpforecast = float(row[3])
                 blocforecast =float(row[4])
-                greenforecast = float(row[5])
-                otherforecast = float(row[6])
+                greenforecast = float(row[6])
+                otherforecast = float(row[7])
                 forecast = float(row[8][:-2])/100.0
             except ValueError:
                 print("Oops. Non-float detected...")
