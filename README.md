@@ -22,6 +22,9 @@ election forcasting data provided by http://www.threehundredeight.com. I will al
 that will help vote swappers discover which ridings they should target to find vote 
 swapping partners.
 
+A prototype web application can be viewed here:
+https://qedan.shinyapps.io/VoteSwap2015
+
 
 
 
