@@ -19,7 +19,14 @@ shinyUI(fluidPage(
                   choices = levels(swaps$Party1)),
       checkboxGroupInput(inputId = "inVetoParties",
                          label = "Parties you do *not* want to vote for",
-                         choices = levels(swaps$Party2))
+                         choices = levels(swaps$Party2)),
+      p("Party colour codes:"),
+      p("Bloc Quebecois", style = "color:#00A7EC"),
+      p("Conservative", style = "color:#263893"),
+      p("Green", style = "color:#3D9B35"),
+      p("Liberal", style = "color:#D71921"),
+      p("NDP", style = "color:#F78320"),
+      p("Other", style = "color:grey")
     ),
     
     # Show a plot of the generated distribution
@@ -27,11 +34,13 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("Recommendations",
           p("This app recommends strategic vote swaps based on current election forecasts."),
-          p("\n"),
           p("Select your riding and your preferred party."),
-          p("\n"),
           p("The app will recommend the best ridings to look for swap partners."),
-          plotOutput("distPlot")
+          plotOutput("distPlot"),
+          p("Copy and paste your swap request to the ",
+            a("Vote Swap Canada Facebook group", href="http://www.facebook.com/voteswapcanada"),
+            ":"),
+          textOutput("requestText")
         ),
         tabPanel("What is this?",
                  p("The recommendations provided by this site are based on the strategic value of Canadians' votes."),
@@ -43,7 +52,8 @@ shinyUI(fluidPage(
                    a("my blog.", 
                      href="https://rwuncertainty.wordpress.com/2015/10/04/canadas-voter-inequality-and-the-vote-swapping-economy/")),
                  p("Analysis details and source code are available on ",
-                   a("my Github. ", href="http://www.github.com/QEDan"), "Pull requests are welcome.")
+                   a("my Github. ", href="http://www.github.com/QEDan"), "Pull requests are welcome."),
+                 p("This software is released under an MIT free software licence. Copyright Dan Mazur 2015.")
                  )
       )
     )

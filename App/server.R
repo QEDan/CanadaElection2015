@@ -18,15 +18,18 @@ shinyServer(function(input, output) {
                     '#3D9B35','#D71921','#F78320', 'grey'),
                     c('New Democratic', 'Conservative', 'Liberal',
                       'Green', 'Bloc Quebecois', 'Other'))
-  #partyColours <- c('orange', 'blue', 'red', 'green', 'lightblue', 'grey')
-  #names(partyColours) <- c('New Democratic', 'Conservative', 'Liberal',
-  #                         'Green', 'Bloc Quebecois', 'Other')
   
-  output$distPlot <- renderPlot({
+  whichSwaps <- function()
+  {
     mySwaps <- swaps[swaps$Riding1 == input$inRiding1 &
                        swaps$Party1 == input$inParty1, ]
     mySwaps <- mySwaps[with(mySwaps, order(-totalBenefit)), ]
     mySwaps <- subset(mySwaps, ! Party2 %in% input$inVetoParties)
+    return(mySwaps)
+  }
+  
+  output$distPlot <- renderPlot({
+    mySwaps <- whichSwaps()
     if (nrow(mySwaps) < 10)
     {
       plot.new()
@@ -56,4 +59,33 @@ shinyServer(function(input, output) {
       rm(op)
     }
   })
+  
+  formatList <- function(list)
+  {
+    ll <- length(list)
+    if(ll < 2)
+    {
+      return(list)
+    }
+    else
+    {
+     outText <- paste0(list[1:(ll - 1)], collapse=", ")
+     outText <- paste0(outText, ", or ", list[ll], collapse="")
+    }
+    return(outText)
+  }
+  
+  output$requestText <- renderText({
+    mySwaps <- whichSwaps()
+    myRidings <- levels(factor(mySwaps[1:10,]$Riding2))
+    myParties <- levels(factor(mySwaps[1:10,]$Party2))
+    request <- paste(c("I am a ", input$inParty1,
+                       " party supporter in the ", input$inRiding1,
+                       " riding and am willing to vote for the ",  formatList(myParties),
+                       " party."), sep="")
+    request <- paste(c(request, " I am looking to swap with someone willing to vote for the ", input$inParty1, 
+                       " Party, preferably in one of the following ridings:",
+                       formatList(myRidings), "."))
+    return(request)
+    })
 })
