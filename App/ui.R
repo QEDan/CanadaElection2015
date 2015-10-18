@@ -36,6 +36,9 @@ shinyUI(fluidPage(
           p("This app recommends strategic vote swaps based on current election forecasts."),
           p("Select your riding and your preferred party."),
           p("The app will recommend the best ridings to look for swap partners."),
+          p("Find your riding at ", 
+              a("Elections Canada", href="http://elections.ca/"),
+            "."),
           plotOutput("distPlot"),
           p("Copy and paste your swap request to the ",
             a("Vote Swap Canada Facebook group", href="http://www.facebook.com/voteswapcanada"),
@@ -53,7 +56,9 @@ shinyUI(fluidPage(
                      href="https://rwuncertainty.wordpress.com/2015/10/04/canadas-voter-inequality-and-the-vote-swapping-economy/")),
                  p("Analysis details and source code are available on ",
                    a("my Github. ", href="http://www.github.com/QEDan"), "Pull requests are welcome."),
-                 p("This software is released under an MIT free software licence. Copyright Dan Mazur 2015.")
+                 p("This software is released under an MIT free software licence. Copyright ",
+                   a("Dan Mazur ", href="http://www.danmazur.ca"),
+                  "2015.")
                  )
       )
     )
